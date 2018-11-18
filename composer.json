@@ -1,0 +1,21 @@
+{
+    "name": "bobwez98/bitbucket-wrapper",
+    "description": "A wrapper for the Bitbucket api.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bob Wezelman",
+            "email": "bob.wezelman@hotmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "guzzlehttp/guzzle": "*",
+        "ext-json": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "BitbucketWrapper\\": "src/"
+        }
+    }
+}
