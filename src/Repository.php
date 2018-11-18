@@ -32,15 +32,6 @@ class Repository extends Base
 
     /**
      * @param $page
-     * @return bool
-     */
-    public function hasNextPage($page)
-    {
-        return isset($page->next) ? true : false;
-    }
-
-    /**
-     * @param $page
      * @return bool|mixed
      */
     public function getNextPage($page)
