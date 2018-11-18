@@ -27,6 +27,9 @@ class Repository extends Base
      */
     public function getPagedRepositories($url)
     {
+        if (!strpos($url, config('bitbucket.bitbucket.account'))) {
+            $url = $url . config('bitbucket.bitbucket.account');
+        }
         return json_decode($this->request($url));
     }
 

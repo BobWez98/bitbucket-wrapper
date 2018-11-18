@@ -10,9 +10,7 @@ class base
      */
     public function request($url)
     {
-        if (!strpos($url, config('bitbucket.bitbucket.account'))) {
-            $url = $url . config('bitbucket.bitbucket.account');
-        }
+
         return json_decode($res = $this->client->request('GET', $url, [
             'auth' => [
                 config('bitbucket.bitbucket.username'),
