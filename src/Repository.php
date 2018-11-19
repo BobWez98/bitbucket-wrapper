@@ -31,7 +31,7 @@ class Repository extends Base
             $url = $url . config('bitbucket.bitbucket.account');
         }
 
-        return json_decode($this->request($url));
+        return $this->request($url);
     }
 
     /**
