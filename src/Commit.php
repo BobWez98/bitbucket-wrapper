@@ -16,10 +16,11 @@ class Commit extends Base
 
     public function getPagedCommitsForRepo($repoSlug)
     {
-        if(strpos($this->url, config('bitbucket.bitbucket.account')) || (strpos($this->url, config('bitbucket.bitbucket.account')) && strpos($this->url, $repoSlug))) {
+        if (strpos($this->url, config('bitbucket.bitbucket.account')) || (strpos($this->url,
+                    config('bitbucket.bitbucket.account')) && strpos($this->url, $repoSlug))) {
             $url = $this->url;
         } else {
-            $url = $this->url . config('bitbucket.bitbucket.account'). '/' . $repoSlug . '/commits';
+            $url = $this->url . config('bitbucket.bitbucket.account') . '/' . $repoSlug . '/commits';
         }
         return $this->request($url);
     }
@@ -27,15 +28,14 @@ class Commit extends Base
     public function all($repoSlug)
     {
         $commits = [];
-        while(true) {
+        while (true) {
             $pagedCommits = $this->getPagedCommitsForRepo($repoSlug);
 
-            foreach($pagedCommits->values as $commit) {
+            foreach ($pagedCommits->values as $commit) {
                 $commits[] = $commit;
             }
 
-            if(isset($pagedCommits->next))
-            {
+            if (isset($pagedCommits->next)) {
                 $this->url = $pagedCommits->next;
             } else {
                 break;
@@ -49,7 +49,7 @@ class Commit extends Base
         $commits = [];
         $date = Carbon::parse($date);
 
-        while(true){
+        while (true) {
             $pagedCommits = $this->getPagedCommitsForRepo($repoSlug);
 
             foreach ($pagedCommits->values as $commit) {
@@ -61,13 +61,39 @@ class Commit extends Base
                     $commits[] = $commit;
                 }
             }
-            if(!isset($commit->next) || isset($break))
-            {
+            if (!isset($commit->next) || isset($break)) {
                 break;
             } else {
                 $this->url = $pagedCommits->next;
             }
         }
+        return $commits;
+    }
+
+    public function getCommitsByDate($repoSlug, $date)
+    {
+
+        $date = Carbon::parse($date)->startOfDay();
+        $commits = [];
+        while (true) {
+            $pagedCommits = $this->getPagedCommitsForRepo($repoSlug);
+            foreach ($pagedCommits->values as $commit) {
+                $commitDate = Carbon::parse($commit->date)->startOfDay();
+                if ($date->equalTo($commitDate)) {
+                    $commits[] = $commit;
+                } elseif ($commitDate->lessThan($date)) {
+                    $break = true;
+                    break;
+                }
+            }
+
+            if(isset($pagedCommits->next) && !isset($break)) {
+                $this->url = $pagedCommits->next;
+            } else {
+                break;
+            }
+        }
+
         return $commits;
     }
 }
