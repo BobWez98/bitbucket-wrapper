@@ -2,7 +2,7 @@
 
 namespace BitbucketWrapper;
 
-class base
+class Base
 {
     /**
      * @param $url
@@ -10,7 +10,6 @@ class base
      */
     public function request($url)
     {
-
         return json_decode($res = $this->client->request('GET', $url, [
             'auth' => [
                 config('bitbucket.bitbucket.username'),

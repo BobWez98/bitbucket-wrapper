@@ -87,7 +87,7 @@ class Commit extends Base
                 }
             }
 
-            if(isset($pagedCommits->next) && !isset($break)) {
+            if (isset($pagedCommits->next) && !isset($break)) {
                 $this->url = $pagedCommits->next;
             } else {
                 break;

@@ -1,4 +1,5 @@
 <?php
+
 namespace BitbucketWrapper;
 
 use \GuzzleHttp\Client;
@@ -6,7 +7,7 @@ use \GuzzleHttp\Client;
 class Repository extends Base
 {
     protected $client;
-    protected $url = 'https://api.bitbucket.org/2.0/repositories/' ;
+    protected $url = 'https://api.bitbucket.org/2.0/repositories/';
     protected $account_name;
     protected $nextPage;
 
@@ -16,7 +17,6 @@ class Repository extends Base
      */
     public function __construct(Client $client)
     {
-
         $this->client = $client;
         $this->account_name = config('bitbucket.bitbucket.account');
     }
@@ -30,6 +30,7 @@ class Repository extends Base
         if (!strpos($url, config('bitbucket.bitbucket.account'))) {
             $url = $url . config('bitbucket.bitbucket.account');
         }
+
         return json_decode($this->request($url));
     }
 
@@ -44,6 +45,7 @@ class Repository extends Base
         } else {
             return $this->hasNextPage($page);
         }
+
         return $this->getPagedRepositories($page->next);
     }
 
@@ -54,11 +56,10 @@ class Repository extends Base
     {
         $repositories = [];
         while (true) {
-            $repos = $this->getPagedRepositories($this->url );
-           foreach($repos->values as $repo)
-           {
-               $repositories[] = $repo;
-           }
+            $repos = $this->getPagedRepositories($this->url);
+            foreach ($repos->values as $repo) {
+                $repositories[] = $repo;
+            }
 
             if (isset($repos->next)) {
                 $this->url = $repos->next;
@@ -66,6 +67,7 @@ class Repository extends Base
                 break;
             }
         }
+
         return $repositories;
     }
 }
