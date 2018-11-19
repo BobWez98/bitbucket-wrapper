@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8472e705ecfe2ac0e076fc181a40d01a",
+    "content-hash": "efca272364d138452186cfcdd8053515",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "b8772dd9ecfd7b004f75a097543028e573e12586"
+                "reference": "dd9b713b984d88938289a17e6d2e562870ded791"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/b8772dd9ecfd7b004f75a097543028e573e12586",
-                "reference": "b8772dd9ecfd7b004f75a097543028e573e12586",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/dd9b713b984d88938289a17e6d2e562870ded791",
+                "reference": "dd9b713b984d88938289a17e6d2e562870ded791",
                 "shasum": ""
             },
             "require": {
@@ -40,12 +40,12 @@
                 }
             },
             "autoload": {
-                "files": [
-                    "src/functions_include.php"
-                ],
                 "psr-4": {
                     "GuzzleHttp\\": "src/"
-                }
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -69,7 +69,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2018-11-16T13:39:00+00:00"
+            "time": "2018-11-19T14:12:01+00:00"
         },
         {
             "name": "guzzlehttp/promises",

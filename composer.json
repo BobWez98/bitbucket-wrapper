@@ -17,5 +17,12 @@
         "psr-4": {
             "BitbucketWrapper\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "BitbucketWrapper\\BitbucketWrapperServiceProvider"
+            ]
+        }
     }
 }
