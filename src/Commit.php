@@ -2,7 +2,7 @@
 
 namespace BitbucketWrapper;
 
-
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 
 class Commit extends Base
@@ -46,7 +46,28 @@ class Commit extends Base
 
     public function getCommitsFromDate($repoSlug, $date)
     {
+        $commits = [];
+        $date = Carbon::parse($date);
 
+        while(true){
+            $pagedCommits = $this->getPagedCommitsForRepo($repoSlug);
+
+            foreach ($pagedCommits->values as $commit) {
+
+                if (!Carbon::parse($commit->date)->gte($date)) {
+                    $break = true;
+                    break;
+                } else {
+                    $commits[] = $commit;
+                }
+            }
+            if(!isset($commit->next) || isset($break))
+            {
+                break;
+            } else {
+                $this->url = $pagedCommits->next;
+            }
+        }
+        return $commits;
     }
-
 }
