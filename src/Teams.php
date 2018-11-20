@@ -10,9 +10,9 @@ class Teams extends Base
     protected $client;
     protected $url = 'https://api.bitbucket.org/2.0/teams';
 
-    public function __construct(Client $client)
+    public function __construct()
     {
-        $this->client = $client;
+        $this->client = new Client();
     }
 
     public function getUsersInTeam()

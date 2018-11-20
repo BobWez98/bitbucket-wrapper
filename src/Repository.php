@@ -15,9 +15,9 @@ class Repository extends Base
      * Repository constructor.
      * @param Client $client
      */
-    public function __construct(Client $client)
+    public function __construct()
     {
-        $this->client = $client;
+        $this->client = new Client();
         $this->account_name = config('bitbucket.bitbucket.account');
     }
 

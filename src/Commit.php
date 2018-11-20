@@ -8,10 +8,10 @@ use GuzzleHttp\Client;
 class Commit extends Base
 {
     protected $url = 'https://api.bitbucket.org/2.0/repositories/';
-
-    public function __construct(Client $client)
+    protected $client;
+    public function __construct()
     {
-        $this->client = $client;
+        $this->client = new Client();
     }
 
     public function getPagedCommitsForRepo($repoSlug)

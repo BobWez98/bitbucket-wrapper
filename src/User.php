@@ -12,9 +12,9 @@ class User extends Base
      * User constructor.
      * @param Client $client
      */
-    public function __construct(Client $client)
+    public function __construct()
     {
-        $this->client = $client;
+        $this->client = new Client();
     }
 
     /**
