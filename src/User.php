@@ -24,9 +24,4 @@ class User extends Base
     {
         return $this->request($this->url);
     }
-
-    public function update()
-    {
-
-    }
 }
