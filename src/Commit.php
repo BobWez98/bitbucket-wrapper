@@ -22,7 +22,22 @@ class Commit extends Base
         } else {
             $url = $this->url . config('bitbucket.bitbucket.account') . '/' . $repoSlug . '/commits';
         }
-        return $this->request($url);
+        $request = $this->request($url);
+        if(isset($request->next)) {
+            $this->url = $request->next;
+        } else {
+            $this->url = '';
+        }
+        return $request;
+    }
+
+    public function getNextPage()
+    {
+        $nextPage = $this->request($this->url);
+        if(isset($nextPage->next)) {
+           $this->url = $nextPage->next;
+        }
+        return $this->url ?  $nextPage : false;
     }
 
     public function all($repoSlug)
@@ -95,5 +110,10 @@ class Commit extends Base
         }
 
         return $commits;
+    }
+
+    public function getCommitCountFromDate($repoSlug, $date)
+    {
+        return count($this->getCommitsFromDate($repoSlug, $date));
     }
 }
