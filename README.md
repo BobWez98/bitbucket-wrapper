@@ -10,7 +10,7 @@ composer require bobwez98/bitbucket-wrapper
 php artisan vendor:publish --provider="BitbucketWrapper\BitbucketWrapperServiceProvider"
 ```
 ### Usage
-Put your Bitbucket App credentials in `.env`.
+Put your Bitbucket App credentials in the applications `.env` file.
 
 ````text
 BB_USER=
