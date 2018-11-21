@@ -2,7 +2,7 @@
 
 namespace BitbucketWrapper;
 
-class Base
+abstract class Base
 {
     /**
      * @param $url
