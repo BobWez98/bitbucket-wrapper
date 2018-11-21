@@ -22,7 +22,7 @@ class Commit extends Base
      * @param $repoSlug
      * @return mixed
      */
-    public function getPagedCommitsForRepo($repoSlug)
+    public function getPagedCommitsForRepo(string $repoSlug)
     {
         if (strpos($this->url, config('bitbucket.bitbucket.account')) || (strpos($this->url,
                     config('bitbucket.bitbucket.account')) && strpos($this->url, $repoSlug))) {
@@ -51,7 +51,7 @@ class Commit extends Base
      * @param $repoSlug
      * @return array
      */
-    public function all($repoSlug)
+    public function all(string $repoSlug)
     {
         $commits = [];
         while (true) {
@@ -75,7 +75,7 @@ class Commit extends Base
      * @param $date
      * @return array
      */
-    public function getCommitsFromDate($repoSlug, $date)
+    public function getCommitsFromDate(string $repoSlug, string $date)
     {
         $commits = [];
         $date = Carbon::parse($date);
@@ -106,7 +106,7 @@ class Commit extends Base
      * @param $date
      * @return array
      */
-    public function getCommitsByDate($repoSlug, $date)
+    public function getCommitsByDate(string $repoSlug, string $date)
     {
         $date = Carbon::parse($date)->startOfDay();
         $commits = [];

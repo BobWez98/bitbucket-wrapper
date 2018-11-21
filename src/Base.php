@@ -8,7 +8,7 @@ class Base
      * @param $url
      * @return mixed
      */
-    public function request($url)
+    public function request(string $url)
     {
         return json_decode($res = $this->client->request('GET', $url, [
             'auth' => [
