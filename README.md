@@ -79,7 +79,7 @@ $commit->getCommitsFromDate($repoSlug, $date);
 
 Get all commits on a specific date
 ```php
-user BitbucketWrapper\Commit;
+use BitbucketWrapper\Commit;
 
 $commit = new Commit();
 
