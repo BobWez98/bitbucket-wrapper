@@ -10,11 +10,18 @@ class Commit extends Base
     protected $url = 'https://api.bitbucket.org/2.0/repositories/';
     protected $client;
 
+    /**
+     * Commit constructor.
+     */
     public function __construct()
     {
         $this->client = new Client();
     }
 
+    /**
+     * @param $repoSlug
+     * @return mixed
+     */
     public function getPagedCommitsForRepo($repoSlug)
     {
         if (strpos($this->url, config('bitbucket.bitbucket.account')) || (strpos($this->url,
@@ -30,6 +37,9 @@ class Commit extends Base
         return $request;
     }
 
+    /**
+     * @return bool|string
+     */
     public function getNextPage()
     {
         $nextPage = $this->request($this->url);
@@ -37,6 +47,10 @@ class Commit extends Base
         return $this->url;
     }
 
+    /**
+     * @param $repoSlug
+     * @return array
+     */
     public function all($repoSlug)
     {
         $commits = [];
@@ -56,6 +70,11 @@ class Commit extends Base
         return $commits;
     }
 
+    /**
+     * @param $repoSlug
+     * @param $date
+     * @return array
+     */
     public function getCommitsFromDate($repoSlug, $date)
     {
         $commits = [];
@@ -82,9 +101,13 @@ class Commit extends Base
         return $commits;
     }
 
+    /**
+     * @param $repoSlug
+     * @param $date
+     * @return array
+     */
     public function getCommitsByDate($repoSlug, $date)
     {
-
         $date = Carbon::parse($date)->startOfDay();
         $commits = [];
         while (true) {
