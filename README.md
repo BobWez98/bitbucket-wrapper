@@ -18,9 +18,9 @@ BB_APP_PASSWORD=
 BB_ACCOUNT_NAME=
 ````
 
-##Documentation
+## Documentation
 
-###Repositories
+### Repositories
 Get all repositories
 ````php
 use BitbucketWrapper\Repository;
@@ -86,7 +86,7 @@ $commit = new Commit();
 $commit->getCommitsByDate($repoSlug, $date);
 ```
 
-###Pullrequests
+### Pullrequests
 
 Get all users pullrequests
 ```php
@@ -97,7 +97,7 @@ $pullrequest = new PullRequest();
 $pullrequest->getUsersPullRequests($username);
 ```
 
-###Teams
+### Teams
 Get all users in team
 ```php
 use BitbucketWrapper\Teams;
@@ -135,7 +135,7 @@ $teams = new Teams();
 $teams->getMembers();
 ```
 
-###User
+### User
 Get current User
 ```php
 use BitbucketWrapper\User;
