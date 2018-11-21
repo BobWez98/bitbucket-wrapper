@@ -25,28 +25,29 @@ class Repository extends Base
      * @param $url
      * @return mixed
      */
-    public function getPagedRepositories($url)
+    public function getPagedRepositories()
     {
-        if (!strpos($url, config('bitbucket.bitbucket.account'))) {
-            $url = $url . config('bitbucket.bitbucket.account');
+        if (!strpos($this->url, config('bitbucket.bitbucket.account'))) {
+            $url = $this->url . config('bitbucket.bitbucket.account');
+        } else {
+            $url = $this->url;
         }
+        $repositories = $this->request($url);
 
-        return $this->request($url);
+        $this->url = isset($repositories->next) ? $repositories->next : $this->url;
+        return $repositories;
     }
 
     /**
      * @param $page
      * @return bool|mixed
      */
-    public function getNextPage($page)
+    public function getNextPage()
     {
-        if ($this->hasNextPage($page)) {
-            $this->nextPage = $page->next;
-        } else {
-            return $this->hasNextPage($page);
-        }
+        $page = $this->request($this->url);
+        $this->url = isset($page->next) ? $page->next : $this->url;
 
-        return $this->getPagedRepositories($page->next);
+        return $page;
     }
 
     /**
@@ -56,7 +57,7 @@ class Repository extends Base
     {
         $repositories = [];
         while (true) {
-            $repos = $this->getPagedRepositories($this->url);
+            $repos = $this->getPagedRepositories();
             foreach ($repos->values as $repo) {
                 $repositories[] = $repo;
             }
