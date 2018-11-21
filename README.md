@@ -144,6 +144,7 @@ $user = new User();
 
 $user->get();
 ```
-
+### Credits
+* [Roy Duineveld](https://github.com/royduin)
 ### License
 [MIT](LICENSE.md)
