@@ -10,6 +10,7 @@ composer require bobwez98/bitbucket-wrapper
 php artisan vendor:publish --provider="BitbucketWrapper\BitbucketWrapperServiceProvider"
 ```
 ### Usage
+Generate an Bitbucket app password under Bitbucket settings-> App passwords. 
 Put your Bitbucket App credentials in the applications `.env` file.
 
 ````text
