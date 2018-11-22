@@ -32,7 +32,7 @@ class Commit extends Base
         }
 
         $request = $this->request($url);
-        $this->url = isset($request->next) ? $request->next : $this->url;
+        $this->url = $request->next ?? $this->url;
 
         return $request;
     }
@@ -43,7 +43,7 @@ class Commit extends Base
     public function getNextPage()
     {
         $nextPage = $this->request($this->url);
-        $this->url = isset($nextPage->next) ? $nextPage->next : false;
+        $this->url = $nextPage->next ?? false;
         return $this->url;
     }
 
@@ -92,10 +92,9 @@ class Commit extends Base
                     $commits[] = $commit;
                 }
             }
+            $this->url = $pagedCommits->next ?? $this->url;
             if (!isset($commit->next) || isset($break)) {
                 break;
-            } else {
-                $this->url = $pagedCommits->next;
             }
         }
         return $commits;
@@ -122,9 +121,8 @@ class Commit extends Base
                 }
             }
 
-            if (isset($pagedCommits->next) && !isset($break)) {
-                $this->url = $pagedCommits->next;
-            } else {
+            $this->url = $pagedCommits->next ?? $this->url;
+            if (isset($break)) {
                 break;
             }
         }
