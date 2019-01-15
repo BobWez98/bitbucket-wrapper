@@ -2,24 +2,12 @@
 
 namespace BitbucketWrapper;
 
-use \GuzzleHttp\Client;
-
 class Repository extends Base
 {
     protected $client;
     protected $url = 'https://api.bitbucket.org/2.0/repositories/';
     protected $account_name;
     protected $nextPage;
-
-    /**
-     * Repository constructor.
-     * @param Client $client
-     */
-    public function __construct()
-    {
-        $this->client = new Client();
-        $this->account_name = config('bitbucket.bitbucket.account');
-    }
 
     /**
      * @param $url

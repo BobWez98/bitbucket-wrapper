@@ -3,20 +3,11 @@
 namespace BitbucketWrapper;
 
 use Carbon\Carbon;
-use GuzzleHttp\Client;
 
 class Commit extends Base
 {
     protected $url = 'https://api.bitbucket.org/2.0/repositories/';
     protected $client;
-
-    /**
-     * Commit constructor.
-     */
-    public function __construct()
-    {
-        $this->client = new Client();
-    }
 
     /**
      * @param $repoSlug
@@ -25,7 +16,7 @@ class Commit extends Base
     public function getPagedCommitsForRepo(string $repoSlug)
     {
         if (strpos($this->url, config('bitbucket.bitbucket.account')) || (strpos($this->url,
-                    config('bitbucket.bitbucket.account')) && strpos($this->url, $repoSlug))) {
+            config('bitbucket.bitbucket.account')) && strpos($this->url, $repoSlug))) {
             $url = $this->url;
         } else {
             $url = $this->url . config('bitbucket.bitbucket.account') . '/' . $repoSlug . '/commits';
