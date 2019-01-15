@@ -6,11 +6,11 @@ use GuzzleHttp\Client;
 
 abstract class Base
 {
-
     public function __construct()
     {
         $this->client = new Client();
     }
+
     /**
      * @param $url
      * @return mixed

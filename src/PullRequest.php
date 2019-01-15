@@ -13,7 +13,6 @@ class PullRequest extends Base
      */
     public function getUsersPullRequests(string $user)
     {
-        return $this->request($this->url . $user);
+        return $this->request($this->url.$user);
     }
-
 }

@@ -15,14 +15,15 @@ class Repository extends Base
      */
     public function getPagedRepositories()
     {
-        if (!strpos($this->url, config('bitbucket.bitbucket.account'))) {
-            $url = $this->url . config('bitbucket.bitbucket.account');
+        if (! strpos($this->url, config('bitbucket.bitbucket.account'))) {
+            $url = $this->url.config('bitbucket.bitbucket.account');
         } else {
             $url = $this->url;
         }
         $repositories = $this->request($url);
 
         $this->url = isset($repositories->next) ? $repositories->next : $this->url;
+
         return $repositories;
     }
 
