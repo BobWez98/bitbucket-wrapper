@@ -2,8 +2,6 @@
 
 namespace BitbucketWrapper;
 
-use \GuzzleHttp\Client;
-
 class Repository extends Base
 {
     protected $client;
@@ -12,29 +10,20 @@ class Repository extends Base
     protected $nextPage;
 
     /**
-     * Repository constructor.
-     * @param Client $client
-     */
-    public function __construct()
-    {
-        $this->client = new Client();
-        $this->account_name = config('bitbucket.bitbucket.account');
-    }
-
-    /**
      * @param $url
      * @return mixed
      */
     public function getPagedRepositories()
     {
-        if (!strpos($this->url, config('bitbucket.bitbucket.account'))) {
-            $url = $this->url . config('bitbucket.bitbucket.account');
+        if (! strpos($this->url, config('bitbucket.bitbucket.account'))) {
+            $url = $this->url.config('bitbucket.bitbucket.account');
         } else {
             $url = $this->url;
         }
         $repositories = $this->request($url);
 
         $this->url = isset($repositories->next) ? $repositories->next : $this->url;
+
         return $repositories;
     }
 

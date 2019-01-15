@@ -3,41 +3,47 @@
 namespace BitbucketWrapper;
 
 use Carbon\Carbon;
-use GuzzleHttp\Client;
 
 class Commit extends Base
 {
     protected $url = 'https://api.bitbucket.org/2.0/repositories/';
     protected $client;
 
-    public function __construct()
-    {
-        $this->client = new Client();
-    }
-
-    public function getPagedCommitsForRepo($repoSlug)
+    /**
+     * @param $repoSlug
+     * @return mixed
+     */
+    public function getPagedCommitsForRepo(string $repoSlug)
     {
         if (strpos($this->url, config('bitbucket.bitbucket.account')) || (strpos($this->url,
-                    config('bitbucket.bitbucket.account')) && strpos($this->url, $repoSlug))) {
+            config('bitbucket.bitbucket.account')) && strpos($this->url, $repoSlug))) {
             $url = $this->url;
         } else {
-            $url = $this->url . config('bitbucket.bitbucket.account') . '/' . $repoSlug . '/commits';
+            $url = $this->url.config('bitbucket.bitbucket.account').'/'.$repoSlug.'/commits';
         }
 
         $request = $this->request($url);
-        $this->url = isset($request->next) ? $request->next : $this->url;
+        $this->url = $request->next ?? $this->url;
 
         return $request;
     }
 
+    /**
+     * @return bool|string
+     */
     public function getNextPage()
     {
         $nextPage = $this->request($this->url);
-        $this->url = isset($nextPage->next) ? $nextPage->next : false;
+        $this->url = $nextPage->next ?? false;
+
         return $this->url;
     }
 
-    public function all($repoSlug)
+    /**
+     * @param $repoSlug
+     * @return array
+     */
+    public function all(string $repoSlug)
     {
         $commits = [];
         while (true) {
@@ -53,10 +59,16 @@ class Commit extends Base
                 break;
             }
         }
+
         return $commits;
     }
 
-    public function getCommitsFromDate($repoSlug, $date)
+    /**
+     * @param $repoSlug
+     * @param $date
+     * @return array
+     */
+    public function getCommitsFromDate(string $repoSlug, string $date)
     {
         $commits = [];
         $date = Carbon::parse($date);
@@ -65,26 +77,29 @@ class Commit extends Base
             $pagedCommits = $this->getPagedCommitsForRepo($repoSlug);
 
             foreach ($pagedCommits->values as $commit) {
-
-                if (!Carbon::parse($commit->date)->gte($date)) {
+                if (! Carbon::parse($commit->date)->gte($date)) {
                     $break = true;
                     break;
                 } else {
                     $commits[] = $commit;
                 }
             }
-            if (!isset($commit->next) || isset($break)) {
+            $this->url = $pagedCommits->next ?? $this->url;
+            if (! isset($commit->next) || isset($break)) {
                 break;
-            } else {
-                $this->url = $pagedCommits->next;
             }
         }
+
         return $commits;
     }
 
-    public function getCommitsByDate($repoSlug, $date)
+    /**
+     * @param $repoSlug
+     * @param $date
+     * @return array
+     */
+    public function getCommitsByDate(string $repoSlug, string $date)
     {
-
         $date = Carbon::parse($date)->startOfDay();
         $commits = [];
         while (true) {
@@ -99,9 +114,8 @@ class Commit extends Base
                 }
             }
 
-            if (isset($pagedCommits->next) && !isset($break)) {
-                $this->url = $pagedCommits->next;
-            } else {
+            $this->url = $pagedCommits->next ?? $this->url;
+            if (isset($break)) {
                 break;
             }
         }

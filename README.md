@@ -10,6 +10,7 @@ composer require bobwez98/bitbucket-wrapper
 php artisan vendor:publish --provider="BitbucketWrapper\BitbucketWrapperServiceProvider"
 ```
 ### Usage
+Generate an Bitbucket app password [here](https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html#Apppasswords-Createanapppassword). 
 Put your Bitbucket App credentials in the applications `.env` file.
 
 ````text
@@ -144,6 +145,7 @@ $user = new User();
 
 $user->get();
 ```
-
+### Credits
+* [Roy Duineveld](https://github.com/royduin)
 ### License
 [MIT](LICENSE.md)
