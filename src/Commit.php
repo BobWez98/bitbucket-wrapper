@@ -19,7 +19,7 @@ class Commit extends Base
             config('bitbucket.bitbucket.account')) && strpos($this->url, $repoSlug))) {
             $url = $this->url;
         } else {
-            $url = $this->url . config('bitbucket.bitbucket.account') . '/' . $repoSlug . '/commits';
+            $url = $this->url.config('bitbucket.bitbucket.account').'/'.$repoSlug.'/commits';
         }
 
         $request = $this->request($url);
@@ -35,6 +35,7 @@ class Commit extends Base
     {
         $nextPage = $this->request($this->url);
         $this->url = $nextPage->next ?? false;
+
         return $this->url;
     }
 
@@ -58,6 +59,7 @@ class Commit extends Base
                 break;
             }
         }
+
         return $commits;
     }
 
@@ -75,8 +77,7 @@ class Commit extends Base
             $pagedCommits = $this->getPagedCommitsForRepo($repoSlug);
 
             foreach ($pagedCommits->values as $commit) {
-
-                if (!Carbon::parse($commit->date)->gte($date)) {
+                if (! Carbon::parse($commit->date)->gte($date)) {
                     $break = true;
                     break;
                 } else {
@@ -84,10 +85,11 @@ class Commit extends Base
                 }
             }
             $this->url = $pagedCommits->next ?? $this->url;
-            if (!isset($commit->next) || isset($break)) {
+            if (! isset($commit->next) || isset($break)) {
                 break;
             }
         }
+
         return $commits;
     }
 
